@@ -19,7 +19,7 @@ module Minuteman
     end
 
     def count
-      Minuteman.config.redis.call("GET", key).to_i
+      Minuteman.config.redis.call("GET", key).to_f
     end
   end
 end
