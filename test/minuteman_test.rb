@@ -178,6 +178,14 @@ test "count a given event" do
   assert Counterman("enter:new_landing").day.count == 10
 end
 
+test "Sum an event" do
+  [1, 3.6, 14, 1.4].each do |val|
+     Minuteman.sum("orders:totals", val)
+  end
+
+  assert Counterman("orders:totals").day.count == 20
+end
+
 test "count events on some dates" do
   day = Time.new(2015, 10, 15)
   next_day = Time.new(2015, 10, 16)

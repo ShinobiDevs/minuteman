@@ -48,6 +48,31 @@ module Minuteman
       users
     end
 
+    def sum(action, value, users = nil, time = Time.now.utc)
+      time_spans.each do |time_span|
+        process do
+          counter = Minuteman::Counter.create({
+            type: action,
+            time: patterns[time_span].call(time)
+          })
+
+          counter.incrbyfloat value
+        end
+      end
+
+      Array(users).each do |user|
+        time_spans.each do |time_span|
+          counter = Minuteman::Counter::User.create({
+            user_id: user.id,
+            type: action,
+            time: patterns[time_span].call(time)
+          })
+
+          counter.incrbyfloat value
+        end
+      end
+    end
+
     def add(action, time = Time.now.utc, users = [])
       time_spans.each do |time_span|
         process do

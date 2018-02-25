@@ -14,6 +14,10 @@ module Minuteman
       Minuteman.config.redis.call("INCR", key)
     end
 
+    def incrbyfloat(val)
+      Minuteman.config.redis.call("INCRBYFLOAT", key, val)
+    end
+
     def count
       Minuteman.config.redis.call("GET", key).to_i
     end
